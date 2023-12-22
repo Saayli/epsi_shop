@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:epsi_shop/bo/article.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -24,6 +25,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('E-commerce'),
+        actions: [IconButton(onPressed: () => context.go('/cart'), icon: const Icon(Icons.shopping_cart))],
       ),
       body: ListView.separated(
         separatorBuilder: (_, __) => const Divider(),

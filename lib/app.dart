@@ -1,6 +1,19 @@
 import 'package:epsi_shop/cart_page.dart';
 import 'package:epsi_shop/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+final _router = GoRouter(
+  routes: [
+    GoRoute(path: '/',
+    builder: (_,__) => HomePage(),
+    routes: [
+      GoRoute(path: 'cart',
+      builder: (_,__) => CartPage(),
+      )
+    ])
+  ]
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -8,7 +21,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Panier Flutter Sales',
       theme: ThemeData(
         // This is the theme of your application.
@@ -29,7 +42,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      routerConfig: _router,
     );
   }
 }
