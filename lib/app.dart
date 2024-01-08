@@ -1,19 +1,21 @@
 import 'package:epsi_shop/cart_page.dart';
+import 'package:epsi_shop/details_page.dart';
 import 'package:epsi_shop/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-final _router = GoRouter(
-  routes: [
-    GoRoute(path: '/',
-    builder: (_,__) => HomePage(),
-    routes: [
-      GoRoute(path: 'cart',
-      builder: (_,__) => CartPage(),
-      )
-    ])
-  ]
-);
+final _router = GoRouter(routes: [
+  GoRoute(path: '/', builder: (_, __) => HomePage(), routes: [
+    GoRoute(
+      path: 'cart',
+      builder: (_, __) => CartPage(),
+    ),
+    GoRoute(
+      path: 'details',
+      builder: (_, __) => DetailsPage(),
+    ),
+  ])
+]);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

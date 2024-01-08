@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:epsi_shop/bo/article.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import 'bo/cart.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -42,7 +45,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
             trailing: TextButton(
-              onPressed: () {},
+              onPressed: ()=>context.read<Cart>().add(lsArticle[index]),
               child: const Text("Ajouter"),
             ),
             leading: Image.network(lsArticle[index].image),
