@@ -1,8 +1,10 @@
-import 'package:epsi_shop/cart_page.dart';
-import 'package:epsi_shop/details_page.dart';
-import 'package:epsi_shop/home_page.dart';
+import 'package:epsi_shop/page/cart_page.dart';
+import 'package:epsi_shop/page/details_page.dart';
+import 'package:epsi_shop/page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import 'bo/article.dart';
 
 final _router = GoRouter(routes: [
   GoRoute(path: '/', builder: (_, __) => HomePage(), routes: [
@@ -12,7 +14,7 @@ final _router = GoRouter(routes: [
     ),
     GoRoute(
       path: 'details',
-      builder: (_, __) => DetailsPage(),
+      builder: (_, state) => DetailsPage(article: state.extra as Article),
     ),
   ])
 ]);
@@ -41,8 +43,11 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.purple,
+          // ···
+          brightness: Brightness.dark,
+        ),
       ),
       routerConfig: _router,
     );
