@@ -1,3 +1,4 @@
+import 'package:epsi_shop/page/about_us_page.dart';
 import 'package:epsi_shop/page/cart_page.dart';
 import 'package:epsi_shop/page/details_page.dart';
 import 'package:epsi_shop/page/home_page.dart';
@@ -11,6 +12,10 @@ final _router = GoRouter(routes: [
     GoRoute(
       path: 'cart',
       builder: (_, __) => CartPage(),
+    ),
+    GoRoute(
+      path: 'about_us',
+      builder: (_, __) => AboutUsPage(),
     ),
     GoRoute(
       path: 'details',

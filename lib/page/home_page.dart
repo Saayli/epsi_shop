@@ -51,7 +51,10 @@ class HomePage extends StatelessWidget {
               offset: Offset(-6, 7),
               child: IconButton(
                   onPressed: () => context.go('/cart'),
-                  icon: const Icon(Icons.shopping_cart)))
+                  icon: const Icon(Icons.shopping_cart))),
+          TextButton(
+              onPressed: () => context.go('/about_us'),
+              child: const Text("A propos de nous")),
         ],
       ),
       body: FutureBuilder<List<Article>>(
