@@ -18,7 +18,17 @@ class AboutUsPage extends StatelessWidget {
         children: [
           TileLayer(
             urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-          )
+          ),
+          const MarkerLayer(markers: [
+            Marker(
+                alignment: Alignment.center,
+                point: LatLng(47.206326291300535, -1.5394707197070925),
+                child: Icon(
+                  Icons.school,
+                  color: Colors.black,
+                  size: 64,
+                ))
+          ])
         ],
       ),
     );
