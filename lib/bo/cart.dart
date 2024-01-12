@@ -31,6 +31,16 @@ class Cart with ChangeNotifier {
     return prixTotal;
   }
 
+  double totalPrixTva() {
+    double totalPrixTva;
+    return totalPrixTva = totalPrix() * 1.2;
+  }
+
+  double totalTva() {
+    double totalTva;
+    return totalTva = totalPrixTva() - totalPrix();
+  }
+
   bool articleInCart(Article article) {
     var a;
     for (a in _articles) {

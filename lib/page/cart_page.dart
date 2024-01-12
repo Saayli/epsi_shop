@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../bo/cart.dart';
@@ -88,8 +89,7 @@ class ListCart extends StatelessWidget {
                       Text("Votre panier est de :",
                           style: TextStyle(fontSize: 18)),
                       Text(
-                        context.read<Cart>().totalPrix().toStringAsFixed(2) +
-                            "€",
+                        "${context.read<Cart>().totalPrix().toStringAsFixed(2)}€",
                         style: TextStyle(fontSize: 18),
                       ),
                     ]),
@@ -111,7 +111,10 @@ class ListCart extends StatelessWidget {
                               child: const Text("Supprimer"),
                             ),
                           )),
-                )
+                ),
+                TextButton(
+                    onPressed: () => context.go("/cart/buy"),
+                    child: Text("Procéder au paiement"))
               ],
             ));
   }
