@@ -21,7 +21,18 @@ class BuyPage extends StatelessWidget {
             Spacer(),
             AdressItem(),
             Spacer(),
-            PaimentItem(),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text("Méthode de paiement", style: TextStyle(fontSize: 19)),
+              Row(children: [
+                PaimentItem(icon: FaIcon(FontAwesomeIcons.paypal)),
+                Spacer(),
+                PaimentItem(icon: FaIcon(FontAwesomeIcons.ccMastercard)),
+                Spacer(),
+                PaimentItem(icon: FaIcon(FontAwesomeIcons.ccVisa)),
+                Spacer(),
+                PaimentItem(icon: FaIcon(FontAwesomeIcons.applePay)),
+              ])
+            ]),
             Spacer(),
             ValidationButton(),
           ],
@@ -133,7 +144,9 @@ class AdressItem extends StatelessWidget {
 }
 
 class PaimentItem extends StatefulWidget {
-  const PaimentItem({super.key});
+  const PaimentItem({super.key, required this.icon});
+
+  final Widget icon;
 
   @override
   State<PaimentItem> createState() => _PaimentItemState();
@@ -144,51 +157,38 @@ class _PaimentItemState extends State<PaimentItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Méthode de paiement", style: TextStyle(fontSize: 19)),
-        Row(
-          children: [
-            SizedBox(
-                height: 100,
-                child: IconButton(
-                  onPressed: _select,
-                  icon: _isSelected
-                      ? const FaIcon(FontAwesomeIcons.paypal)
-                      : const Icon(Icons.star),
-                )),
-            Spacer(),
-            SizedBox(
-                height: 100,
-                child: IconButton(
-                  onPressed: _select,
-                  icon: _isSelected
-                      ? const FaIcon(FontAwesomeIcons.applePay)
-                      : const Icon(Icons.star),
-                )),
-            Spacer(),
-            SizedBox(
-                height: 100,
-                child: IconButton(
-                  onPressed: _select,
-                  icon: _isSelected
-                      ? const FaIcon(FontAwesomeIcons.ccVisa)
-                      : const Icon(Icons.star),
-                )),
-            Spacer(),
-            SizedBox(
-                height: 100,
-                child: IconButton(
-                  onPressed: _select,
-                  icon: _isSelected
-                      ? const FaIcon(FontAwesomeIcons.ccMastercard)
-                      : const Icon(Icons.star),
-                ))
-          ],
-        ),
-      ],
-    );
+    return _isSelected
+        ? SizedBox(
+            height: 80,
+            width: 80,
+            child: Badge(
+              offset: const Offset(-5, 7),
+              label: const FaIcon(FontAwesomeIcons.check),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(
+                          color: Theme.of(context).colorScheme.outline),
+                    ),
+                    child: IconButton(onPressed: _select, icon: widget.icon)),
+              ),
+            ),
+          )
+        : SizedBox(
+            height: 80,
+            width: 80,
+            child: Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side:
+                      BorderSide(color: Theme.of(context).colorScheme.outline),
+                ),
+                child: IconButton(onPressed: _select, icon: widget.icon)),
+          );
   }
 
   void _select() {

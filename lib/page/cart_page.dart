@@ -81,41 +81,46 @@ class ListCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<Cart>(
-        builder: (context, cart, _) => Column(
-              children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Votre panier est de :",
-                          style: TextStyle(fontSize: 18)),
-                      Text(
-                        "${context.read<Cart>().totalPrix().toStringAsFixed(2)}€",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ]),
-                Flexible(
-                  child: ListView.builder(
-                      itemCount: cart.articles.length,
-                      itemBuilder: (context, index) => ListTile(
-                            title: Text(cart.articles[index].nom),
-                            subtitle: Text(
-                              cart.articles[index].getPrixEuro(),
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            leading: Image.network(cart.articles[index].image),
-                            trailing: TextButton(
-                              onPressed: () => context
-                                  .read<Cart>()
-                                  .removeArticle(cart.articles[index]),
-                              child: const Text("Supprimer"),
-                            ),
-                          )),
-                ),
-                TextButton(
-                    onPressed: () => context.go("/cart/buy"),
-                    child: Text("Procéder au paiement"))
-              ],
+        builder: (context, cart, _) => Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Votre panier est de :",
+                            style: TextStyle(fontSize: 18)),
+                        Text(
+                          "${context.read<Cart>().totalPrix().toStringAsFixed(2)}€",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ]),
+                  Flexible(
+                    child: ListView.builder(
+                        itemCount: cart.articles.length,
+                        itemBuilder: (context, index) => ListTile(
+                              title: Text(cart.articles[index].nom),
+                              subtitle: Text(
+                                cart.articles[index].getPrixEuro(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              leading:
+                                  Image.network(cart.articles[index].image),
+                              trailing: TextButton(
+                                onPressed: () => context
+                                    .read<Cart>()
+                                    .removeArticle(cart.articles[index]),
+                                child: const Text("Supprimer"),
+                              ),
+                            )),
+                  ),
+                  FilledButton(
+                      onPressed: () => context.go("/cart/buy"),
+                      child: Text("Procéder au paiement"))
+                ],
+              ),
             ));
   }
 }
