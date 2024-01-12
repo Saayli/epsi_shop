@@ -3,6 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../bo/cart.dart';
+import '../item/adress_item.dart';
+import '../item/payment_item.dart';
+import '../item/total_item.dart';
+import 'button/validation_button.dart';
 
 class BuyPage extends StatelessWidget {
   const BuyPage({super.key});
@@ -24,13 +28,13 @@ class BuyPage extends StatelessWidget {
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const Text("Méthode de paiement", style: TextStyle(fontSize: 19)),
               Row(children: [
-                PaimentItem(icon: FaIcon(FontAwesomeIcons.paypal)),
+                PaymentItem(icon: FaIcon(FontAwesomeIcons.paypal)),
                 Spacer(),
-                PaimentItem(icon: FaIcon(FontAwesomeIcons.ccMastercard)),
+                PaymentItem(icon: FaIcon(FontAwesomeIcons.ccMastercard)),
                 Spacer(),
-                PaimentItem(icon: FaIcon(FontAwesomeIcons.ccVisa)),
+                PaymentItem(icon: FaIcon(FontAwesomeIcons.ccVisa)),
                 Spacer(),
-                PaimentItem(icon: FaIcon(FontAwesomeIcons.applePay)),
+                PaymentItem(icon: FaIcon(FontAwesomeIcons.applePay)),
               ])
             ]),
             Spacer(),
@@ -39,189 +43,5 @@ class BuyPage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class TotalItem extends StatelessWidget {
-  const TotalItem({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<Cart>(
-      builder: (context, cart, _) => Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: Theme.of(context).colorScheme.outline),
-        ),
-        child: Container(
-          padding: const EdgeInsets.all(6),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text(
-                "Récapitulatif de la commande",
-                style: TextStyle(fontSize: 18),
-              ),
-              Row(
-                children: [
-                  const Text("Sous-Total", style: TextStyle(fontSize: 15)),
-                  const Spacer(),
-                  Text(
-                      "${context.read<Cart>().totalPrix().toStringAsFixed(2)}€")
-                ],
-              ),
-              Row(
-                children: [
-                  const Text("TVA", style: TextStyle(fontSize: 15)),
-                  const Spacer(),
-                  Text("${context.read<Cart>().totalTva().toStringAsFixed(2)}€")
-                ],
-              ),
-              Row(
-                children: [
-                  const Text("Total",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                  const Spacer(),
-                  Text(
-                    "${context.read<Cart>().totalPrixTva().toStringAsFixed(2)}€",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class AdressItem extends StatelessWidget {
-  const AdressItem({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Text("Adresse de livraison", style: TextStyle(fontSize: 19)),
-          Card(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              side: BorderSide(color: Theme.of(context).colorScheme.outline),
-            ),
-            margin: const EdgeInsets.only(top: 10),
-            child: Container(
-              padding:
-                  const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 20),
-              child: const Row(children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Michel Le Poney",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    Text("8 rue des ouvertures de portes"),
-                    Text("93204 CORBEAUX")
-                  ],
-                ),
-                Spacer(),
-                FaIcon(FontAwesomeIcons.chevronRight)
-              ]),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class PaimentItem extends StatefulWidget {
-  const PaimentItem({super.key, required this.icon});
-
-  final Widget icon;
-
-  @override
-  State<PaimentItem> createState() => _PaimentItemState();
-}
-
-class _PaimentItemState extends State<PaimentItem> {
-  bool _isSelected = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return _isSelected
-        ? SizedBox(
-            height: 80,
-            width: 80,
-            child: Badge(
-              offset: const Offset(-5, 7),
-              label: const FaIcon(FontAwesomeIcons.check),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      side: BorderSide(
-                          color: Theme.of(context).colorScheme.outline),
-                    ),
-                    child: IconButton(onPressed: _select, icon: widget.icon)),
-              ),
-            ),
-          )
-        : SizedBox(
-            height: 80,
-            width: 80,
-            child: Card(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  side:
-                      BorderSide(color: Theme.of(context).colorScheme.outline),
-                ),
-                child: IconButton(onPressed: _select, icon: widget.icon)),
-          );
-  }
-
-  void _select() {
-    setState(() {
-      if (_isSelected) {
-        _isSelected = false;
-      } else {
-        _isSelected = true;
-      }
-    });
-  }
-}
-
-class ValidationButton extends StatelessWidget {
-  const ValidationButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<Cart>(
-        builder: (context, cart, _) => Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                    "En cliquant sur 'Confirmer l'achat', vous acceptez les Conditions de vente de EPSI Shop International. "
-                    "Besoin d'aide ? Désolé on peut rien faire.",
-                    style: TextStyle(fontSize: 10)),
-                const Text(
-                    "En poursuivant, vous acceptez les Conditions d'utilisation du fournisseur de paiement CoffeeDis.",
-                    style: TextStyle(fontSize: 10)),
-                FilledButton(
-                    onPressed: () => context.read<Cart>().removeAll(),
-                    child: const Text("Confirmer l'achat"))
-              ],
-            ));
   }
 }
